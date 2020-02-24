@@ -9,6 +9,8 @@ import Business.AirlineDirectory;
 import Business.Airliner;
 import Business.CustomerDirectory;
 import Business.FlightDetails;
+import Business.FlightDetailsDirectory;
+import Business.Seats;
 import java.awt.CardLayout;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -27,13 +29,17 @@ public class CustomerSpecification extends javax.swing.JPanel {
     private AirlineDirectory airDict;
     private ArrayList<FlightDetails> customerSearch;
     private CustomerDirectory custDict;
+    private FlightDetailsDirectory flightDetailsDirectory;
+    private Seats seats;
     
-    public CustomerSpecification(JPanel CardSequenceJPanel, AirlineDirectory airDict,CustomerDirectory custDict) {
+    public CustomerSpecification(JPanel CardSequenceJPanel, AirlineDirectory airDict,CustomerDirectory custDict,FlightDetailsDirectory flightDetailsDirectory, Seats seats) {
         initComponents();
         this.CardSequenceJPanel=CardSequenceJPanel;
         this.airDict=airDict;
         customerSearch= new ArrayList<FlightDetails>();
         this.custDict=custDict;
+        this.flightDetailsDirectory = flightDetailsDirectory;
+        this.seats = seats;
     }
 
     /**
@@ -47,72 +53,279 @@ public class CustomerSpecification extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtFrom = new javax.swing.JTextField();
+        departureTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtTo = new javax.swing.JTextField();
-        btnGo = new javax.swing.JButton();
+        arrivalTextField = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        departureDateTextField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        priceTextField = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        DayNightComboBox = new javax.swing.JComboBox<>();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(228, 241, 254));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel1.setText("Customer Travel Requirement");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 460, 80));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel2.setText("Departure");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, -1, 30));
-        add(txtFrom, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 230, 290, 40));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 240, -1, 30));
+        add(departureTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 230, 290, 40));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel3.setText("Arrival");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 320, -1, -1));
-        add(txtTo, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 290, 40));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, -1, -1));
 
-        btnGo.setBackground(new java.awt.Color(255, 255, 255));
-        btnGo.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        btnGo.setText("Search");
-        btnGo.setBorder(new javax.swing.border.MatteBorder(null));
-        btnGo.addActionListener(new java.awt.event.ActionListener() {
+        arrivalTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGoActionPerformed(evt);
+                arrivalTextFieldActionPerformed(evt);
             }
         });
-        add(btnGo, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 420, 210, 50));
+        add(arrivalTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 280, 290, 40));
+
+        searchBtn.setBackground(new java.awt.Color(255, 255, 255));
+        searchBtn.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        searchBtn.setText("Search");
+        searchBtn.setBorder(new javax.swing.border.MatteBorder(null));
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+        add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 560, 210, 50));
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel4.setText("Date");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 340, -1, -1));
+
+        departureDateTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                departureDateTextFieldActionPerformed(evt);
+            }
+        });
+        add(departureDateTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 330, 290, 40));
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel5.setText("Price");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 390, -1, -1));
+        add(priceTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, 290, 40));
+
+        jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        jLabel6.setText("Preferred Time ");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
+
+        DayNightComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--", "Morning", "Afternoon", "Night" }));
+        DayNightComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DayNightComboBoxActionPerformed(evt);
+            }
+        });
+        add(DayNightComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 430, 200, 40));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
-//         String src = txtFrom.getText();
-//        String destination= txtTo.getText();
-//        for(Airline airline : airDict.getAirlineDirectory()){
-//        ArrayList<FlightDetails> s= airline.getFlightDetailsDir().getFlightDetailsDir();
-//        for(FlightDetails f:s){
-//        if(f.getDeparture().equalsIgnoreCase(src) && f.getArrival().equalsIgnoreCase(destination)){
-//        customerSearch.add(f);
-//                    }
-//                }
+        String destination= departureTextField.getText();
+        String arrival = arrivalTextField.getText();
+        String date = departureDateTextField.getText();
+        String price = priceTextField.getText();
+        String dayTime = DayNightComboBox.getSelectedItem().toString();
+        //Only destination place
+        if(!destination.isEmpty() && arrival.isEmpty() && date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDeparture().equalsIgnoreCase(destination)){
+                customerSearch.add(f);
+            }
+        }
+        changePanel(customerSearch);
+        }
+        // only arrival place
+        else if(destination.isEmpty() && !arrival.isEmpty() && date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getArrival().equalsIgnoreCase(arrival)){
+                customerSearch.add(f);
+            }
+        }
+        changePanel(customerSearch);
+        }
+        // only departuredate
+        else if(destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDepartureDate().equalsIgnoreCase(date)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //only price
+        else if(destination.isEmpty() && arrival.isEmpty() && date.isEmpty() && !price.isEmpty()&& dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getPrice()== Integer.parseInt(price)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        // only daytime
+        else if(destination.isEmpty() && arrival.isEmpty() && date.isEmpty() && price.isEmpty() && dayTime != "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getPrice()== Integer.parseInt(price)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        // destination place and arrival place
+        else if(!destination.isEmpty() && !arrival.isEmpty() && date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDeparture().equalsIgnoreCase(destination) && f.getArrival().equalsIgnoreCase(arrival)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //destination place and departure date
+        else if(!destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDeparture().equalsIgnoreCase(destination) && f.getDepartureDate().equalsIgnoreCase(date)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //destination place and price
+        else if(!destination.isEmpty() && arrival.isEmpty() && date.isEmpty() && !price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDeparture().equalsIgnoreCase(destination) && f.getPrice()== Integer.parseInt(price)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //arrival place and price
+        else if(destination.isEmpty() && !arrival.isEmpty() && date.isEmpty() && !price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getPrice()== Integer.parseInt(price)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //arrival place and departure date
+        else if(destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && !price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDepartureDate().equalsIgnoreCase(date)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //arrival place and departure date and departure place
+        else if(!destination.isEmpty() && !arrival.isEmpty() && !date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDepartureDate().equalsIgnoreCase(date) && f.getDeparture().equalsIgnoreCase(destination)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //arrival place and price and departure place
+        else if(!destination.isEmpty() && !arrival.isEmpty() && date.isEmpty() && !price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getPrice()== Integer.parseInt(price) && f.getDeparture().equalsIgnoreCase(destination)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //arrival place and price and departure date
+        else if(destination.isEmpty() && !arrival.isEmpty() && !date.isEmpty() && !price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getPrice()== Integer.parseInt(price) && f.getDepartureDate().equalsIgnoreCase(date)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //arrival place and price and departure date
+        else if(destination.isEmpty() && !arrival.isEmpty() && !date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDepartureDate().equalsIgnoreCase(date)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+//        for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+//            if(f.getDeparture().equalsIgnoreCase(destination) && f.getArrival().equalsIgnoreCase(arrival)){
+//                customerSearch.add(f);
+//            }
 //        }
 //        if(customerSearch.isEmpty()){
-//            JOptionPane.showMessageDialog(null,"Flight not found");
+//            JOptionPane.showMessageDialog(null,"Flight not Found!!");
 //            
 //        }
 //        else{
-//        FlightFilterData ffd = new FlightFilterData(CardSequenceJPanel, customerSearch,custDict);
-//        CardSequenceJPanel.add("flightfilterdata",ffd);
-//        CardLayout layout = (CardLayout)CardSequenceJPanel.getLayout();
-//        layout.next(CardSequenceJPanel);
+//            FlightFilterData ffd = new FlightFilterData(CardSequenceJPanel, customerSearch,custDict);
+//            CardSequenceJPanel.add("flightfilterdata",ffd);
+//            CardLayout layout = (CardLayout)CardSequenceJPanel.getLayout();
+//            layout.next(CardSequenceJPanel);
 //        }
         
-    }//GEN-LAST:event_btnGoActionPerformed
+    }//GEN-LAST:event_searchBtnActionPerformed
+    public void changePanel(ArrayList<FlightDetails> customerSearch){
+        if(customerSearch.isEmpty()){
+            JOptionPane.showMessageDialog(null,"Flight not Found!!"); 
+        }
+        else{
+            FlightFilterData ffd = new FlightFilterData(CardSequenceJPanel, customerSearch,custDict,seats);
+            CardSequenceJPanel.add("flightfilterdata",ffd);
+            CardLayout layout = (CardLayout)CardSequenceJPanel.getLayout();
+            layout.next(CardSequenceJPanel);
+        }
+    }
+    private void departureDateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departureDateTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_departureDateTextFieldActionPerformed
+
+    private void arrivalTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arrivalTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_arrivalTextFieldActionPerformed
+
+    private void DayNightComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DayNightComboBoxActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_DayNightComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGo;
+    private javax.swing.JComboBox<String> DayNightComboBox;
+    private javax.swing.JTextField arrivalTextField;
+    private javax.swing.JTextField departureDateTextField;
+    private javax.swing.JTextField departureTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField txtFrom;
-    private javax.swing.JTextField txtTo;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField priceTextField;
+    private javax.swing.JButton searchBtn;
     // End of variables declaration//GEN-END:variables
 }

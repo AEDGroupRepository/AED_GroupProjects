@@ -59,7 +59,7 @@ public class LoginAirliner extends javax.swing.JPanel {
         btnGo = new javax.swing.JButton();
         airlinecombobox = new javax.swing.JComboBox();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N

@@ -60,7 +60,7 @@ public class LoginFleet extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         btnGo1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
 
         fleetComboBox.setBackground(new java.awt.Color(204, 204, 255));
         fleetComboBox.setFont(new java.awt.Font("Times New Roman", 0, 32)); // NOI18N

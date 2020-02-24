@@ -80,7 +80,7 @@ public class FleetWorkArea extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tableFleet.setModel(new javax.swing.table.DefaultTableModel(
@@ -117,7 +117,7 @@ public class FleetWorkArea extends javax.swing.JPanel {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 180, 50));
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 170, 50));
 
         btnAdd.setBackground(new java.awt.Color(255, 255, 255));
         btnAdd.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
@@ -162,7 +162,7 @@ public class FleetWorkArea extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Airline");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel2.setText("Fleet Work Area");

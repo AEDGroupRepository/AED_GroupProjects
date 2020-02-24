@@ -61,7 +61,7 @@ public class AddFleet extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAdd.setBackground(new java.awt.Color(255, 255, 255));
@@ -81,25 +81,36 @@ public class AddFleet extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel2.setText("Airliner");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 260, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel3.setText("Model");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, -1, -1));
-        add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 240, 220, 42));
-        add(txtModel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 310, 220, 42));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, -1, -1));
+
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
+        add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 250, 220, 42));
+        add(txtModel, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, 220, 42));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel4.setText("Seats");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, -1, -1));
-        add(txtSeats, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 370, 220, 42));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, -1, -1));
+        add(txtSeats, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 350, 220, 42));
 
         txtAirlinerName.setEnabled(false);
-        add(txtAirlinerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, 220, 42));
+        txtAirlinerName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAirlinerNameActionPerformed(evt);
+            }
+        });
+        add(txtAirlinerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 200, 220, 42));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel5.setText("Airline ");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, -1, -1));
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
         btnBack.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
@@ -193,6 +204,14 @@ public class AddFleet extends javax.swing.JPanel {
         CardLayout layout=(CardLayout)CardSequenceJPanel.getLayout();
         layout.previous(CardSequenceJPanel);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameActionPerformed
+
+    private void txtAirlinerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAirlinerNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAirlinerNameActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

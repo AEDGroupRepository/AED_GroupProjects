@@ -71,7 +71,7 @@ public class ViewFleet extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));

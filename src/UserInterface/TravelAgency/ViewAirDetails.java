@@ -68,7 +68,7 @@ public class ViewAirDetails extends javax.swing.JPanel {
         airlinerheading = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tableAirlinerDetails.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N

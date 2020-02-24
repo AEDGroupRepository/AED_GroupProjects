@@ -81,7 +81,7 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         txtArrDate = new javax.swing.JTextField();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
@@ -112,6 +112,12 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel4.setText("Arrival");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 240, -1, -1));
+
+        txtSeats.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSeatsActionPerformed(evt);
+            }
+        });
         add(txtSeats, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 450, 220, 42));
         add(txtDestination, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 230, 220, 42));
 
@@ -207,7 +213,7 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
         fd.setFlightNumber(no);
         fd.setDeparture(src);
         fd.setArrival(dest);
-        airline.setSeats(s);
+        fd.setSeats(s);
         fd.setDepartureDate(d);
         fd.setArrivalDate(ad);
         fd.setPrice(p);
@@ -225,6 +231,10 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Please Enter Correct Data", "Warning", JOptionPane.INFORMATION_MESSAGE);
             }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void txtSeatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSeatsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSeatsActionPerformed
 
 boolean datePatternCorrect()  {
         Pattern p= Pattern.compile("^(0?[1-9]|1[012])[-]([0-2][0-9]|3[01])[-]([0-9]{4})$");

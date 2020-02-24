@@ -10,9 +10,11 @@ package UserInterface.Customer;
  * @author Girija Dhawale
  */
 
+import Business.AirlineDirectory;
 import Business.Customer;
 import Business.CustomerDirectory;
 import Business.FlightDetails;
+import Business.Seats;
 import com.sun.glass.events.KeyEvent;
 
 
@@ -21,6 +23,7 @@ import java.awt.CardLayout;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -36,14 +39,19 @@ public class FlightFilterData extends javax.swing.JPanel {
 ArrayList<FlightDetails> customerSearch;
  private CustomerDirectory custDict;
  String p;
+ private AirlineDirectory airlineDirectory;
+ private Seats seats;
 
    
 
-    FlightFilterData(JPanel CardSequenceJPanel, ArrayList<FlightDetails> customerSearch, CustomerDirectory custDict) {
+    FlightFilterData(JPanel CardSequenceJPanel, ArrayList<FlightDetails> customerSearch, CustomerDirectory custDict, Seats seats) {
         initComponents();
         this.CardSequenceJPanel=CardSequenceJPanel;
         this.customerSearch=customerSearch;
         this.custDict=custDict;
+        this.airlineDirectory=airlineDirectory;
+        this.seats = seats;
+        //seats.setSeats();
         populate10();
         
         
@@ -61,12 +69,12 @@ ArrayList<FlightDetails> customerSearch;
         //Collections.sort(customerSearch);
         for(FlightDetails fdd : customerSearch){
         Object[] row = new Object[dtm.getColumnCount()];
-        row[0]=fdd;
+        row[0]=fdd.getFlightNumber();
         row[1]=fdd.getDeparture();
         row[2]=fdd.getArrival();
         row[3]=fdd.getDepartureDate();
-        //row[4]=fdd.getPrice();
-        //row[5]=fdd.getSeats();
+        row[4]=fdd.getPrice();
+        row[5]=fdd.getSeats();
         dtm.addRow(row);
         }
     }
@@ -92,8 +100,10 @@ ArrayList<FlightDetails> customerSearch;
         txtPassportNumber = new javax.swing.JTextField();
         btnConfirmBooking = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        seatsComboBox = new javax.swing.JComboBox<>();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
@@ -137,12 +147,12 @@ ArrayList<FlightDetails> customerSearch;
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Name:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 420, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, -1, -1));
         add(txtCustomerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, 220, 42));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel2.setText("Phone:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, -1, -1));
 
         txtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,8 +162,8 @@ ArrayList<FlightDetails> customerSearch;
         add(txtPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 480, 220, 42));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel3.setText("Passport No");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, -1, -1));
+        jLabel3.setText("Passport No:");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 550, -1, -1));
         add(txtPassportNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, 220, 42));
 
         btnConfirmBooking.setBackground(new java.awt.Color(255, 255, 255));
@@ -169,6 +179,22 @@ ArrayList<FlightDetails> customerSearch;
 
         jLabel4.setText("Best Flight");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 100, 90, 50));
+
+        jLabel5.setText("Seat:");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 600, -1, -1));
+
+        seatsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--" }));
+        seatsComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                seatsComboBoxMouseClicked(evt);
+            }
+        });
+        seatsComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seatsComboBoxActionPerformed(evt);
+            }
+        });
+        add(seatsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 600, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -181,65 +207,59 @@ ArrayList<FlightDetails> customerSearch;
 
     private void btnConfirmBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmBookingActionPerformed
         // TODO add your handling code here:
-        int selectedrow=tableFlightClassification.getSelectedRow();
-        
-        String name=txtCustomerName.getText().trim();
-        
-        if(txtCustomerName.getText().isEmpty()|| txtPhoneNumber.getText().isEmpty()|| txtPassportNumber.getText().isEmpty()){
-             JOptionPane.showMessageDialog(null,"Please Enter all the fields");
-        }
-        else{
-       
-            if(selectedrow >=0 && !name.isEmpty())
-        {
-        
-        String phoneno=txtPhoneNumber.getText().trim();
-        
-        String passport=txtPassportNumber.getText().trim();
-        
-        
-        if(!phonePatternCorrect()) {
-         JOptionPane.showMessageDialog(CardSequenceJPanel, "Enter valid phone number");
-        }else{  
-            Customer c=custDict.addCustomer();
-        c.setName(name);
-        c.setPhoneNumber(phoneno);
-        c.setPassportNumber(passport);
+        int selectedrow = tableFlightClassification.getSelectedRow();
+        String name = txtCustomerName.getText().trim();
+
+        if (txtCustomerName.getText().isEmpty() || txtPhoneNumber.getText().isEmpty() || txtPassportNumber.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please Enter all the fields");
+        } else {
+
+            if (selectedrow >= 0 && !name.isEmpty()) {
+
+                String phoneno = txtPhoneNumber.getText().trim();
+
+                String passport = txtPassportNumber.getText().trim();
+
+                String seatNo = (String) seatsComboBox.getSelectedItem();
+                if (!phonePatternCorrect()) {
+                    JOptionPane.showMessageDialog(CardSequenceJPanel, "Enter valid phone number");
+                } else {
+                    Random rand = new Random();
+                    Customer c = custDict.addCustomer();
+                    c.setName(name);
+                    c.setPhoneNumber(phoneno);
+                    c.setPassportNumber(passport);
+                    c.setSetSeatNo(seatNo);
         //c.setCustflight(custflight);
-        FlightDetails fd=(FlightDetails) tableFlightClassification.getValueAt(selectedrow, 0);
-        
-       
-        int value=0;
-        //value=fd.getSeats();
-        if(value>0)
-        {
-        value--;
-        //fd.setSeats(value);
-        }
-        else{
-        JOptionPane.showMessageDialog(null,"Seats not available");
-        }
+                    String flightNo=(String) tableFlightClassification.getValueAt(selectedrow, 0);
+                    c.setFlightNumer(flightNo);
+                    c.setBookingId(rand.nextInt(1000000));
+//                    int value = 0;
+//                    //value=fd.getSeats();
+//                    if (value > 0) {
+//                        value--;
+//                        //fd.setSeats(value);
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Seats not available");
+//                    }
 //        c.setFightNumber(fd.getFlightNumber());
 //        c.setDeparture(fd.getDeparture());
 //        c.setArrival(fd.getArrival());
-        //c.setPrice(fd.getPrice());
-        //c.setDate(fd.getDate());
-        
-       
-            JOptionPane.showMessageDialog(null,"Successfully Booked!!");
-            populate10();
-            
-         
-        
-        txtCustomerName.setText("");
-        txtPhoneNumber.setText("");
-        txtPassportNumber.setText("");
+                    //c.setPrice(fd.getPrice());
+                    //c.setDate(fd.getDate());
+
+                    JOptionPane.showMessageDialog(null, "Successfully Booked!!");
+                    seats.bookSeats(Integer.parseInt(seatNo));
+                    populate10();
+
+                    txtCustomerName.setText("");
+                    txtPhoneNumber.setText("");
+                    txtPassportNumber.setText("");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Cannot Book. Select flight first.");
+            }
         }
-        }
-        else{
-         JOptionPane.showMessageDialog(null,"Cannot Book. Select flight first.");
-        }
-          }
                                                     
         
     
@@ -247,15 +267,35 @@ ArrayList<FlightDetails> customerSearch;
 
     private void txtPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneNumberActionPerformed
         // TODO add your handling code here:
-       /*int key=evt.getKeyCode();
-        if((key>=evt.VK_0 && key<=evt.VK_9)|| key==KeyEvent.VK_BACKSPACE)
-        {
-        txtPhone.setEditable(true);
-        }
-        else{
-        txtPhone.setEditable(false);
-        }*/
+//       int key=evt.getKeyCode();
+//        if((key>=evt.VK_0 && key<=evt.VK_9)|| key==KeyEvent.VK_BACKSPACE)
+//        {
+//        txtPhone.setEditable(true);
+//        }
+//        else{
+//        txtPhone.setEditable(false);
+//        }
     }//GEN-LAST:event_txtPhoneNumberActionPerformed
+
+    private void seatsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seatsComboBoxActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_seatsComboBoxActionPerformed
+
+    private void seatsComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seatsComboBoxMouseClicked
+        // TODO add your handling code here:
+        int selectedrow=tableFlightClassification.getSelectedRow();
+        if(selectedrow>=0){
+            seatsComboBox.removeAllItems();
+            int seatCount=(int) tableFlightClassification.getValueAt(selectedrow, 5);
+            System.out.println(seatCount);
+            seats.setTotalSeats(seatCount);
+            ArrayList<Integer> availableSeats = seats.getAvailableSeats();
+            for(int i =0; i<availableSeats.size(); i++){
+                seatsComboBox.addItem(""+availableSeats.get(i)+"");
+            }
+        }
+    }//GEN-LAST:event_seatsComboBoxMouseClicked
 
   boolean phonePatternCorrect()  {
         Pattern p= Pattern.compile("^[0-9]{10}+$");
@@ -270,7 +310,9 @@ ArrayList<FlightDetails> customerSearch;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> seatsComboBox;
     private javax.swing.JTable tableFlightClassification;
     private javax.swing.JTextField txtCustomerName;
     private javax.swing.JTextField txtPassportNumber;

@@ -54,7 +54,7 @@ public class CustomerDetails extends javax.swing.JPanel {
         txtCustomer = new javax.swing.JTextField();
         btnConfirm = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
@@ -74,23 +74,29 @@ public class CustomerDetails extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel2.setText("Name");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, -1, -1));
-        add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 180, 230, 42));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 200, -1, -1));
+        add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 190, 230, 42));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel3.setText("Phone");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 270, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, -1, -1));
         add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 260, 230, 42));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel4.setText("Passport No");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 340, -1, -1));
-        add(txtPassport, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 230, 42));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 340, -1, -1));
+        add(txtPassport, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 230, 42));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel5.setText("Customer Fight");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, -1, -1));
-        add(txtCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 430, 230, 42));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 410, -1, -1));
+
+        txtCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCustomerActionPerformed(evt);
+            }
+        });
+        add(txtCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 400, 230, 42));
 
         btnConfirm.setBackground(new java.awt.Color(255, 255, 255));
         btnConfirm.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
@@ -122,6 +128,10 @@ public class CustomerDetails extends javax.swing.JPanel {
         c.setPassportNumber(txtPassport.getText().trim());
          }
     }//GEN-LAST:event_btnConfirmActionPerformed
+
+    private void txtCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCustomerActionPerformed
  boolean phonePatternCorrect()  {
         Pattern p= Pattern.compile("^[0-9]{10}+$");
         Matcher m = p.matcher(txtPhone.getText());

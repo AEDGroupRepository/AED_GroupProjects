@@ -47,7 +47,7 @@ public class AddAirline extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAddAirliner.setBackground(new java.awt.Color(255, 255, 255));
@@ -64,7 +64,7 @@ public class AddAirline extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Airline Name");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 150, 50));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 150, 50));
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
         btnBack.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N

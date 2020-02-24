@@ -20,6 +20,7 @@ public class FlightDetails{
     private String arrivalDate;
     private String dayTime;
     private double price;
+    private int seats;
 
     public String getArrivalDate() {
         return arrivalDate;
@@ -85,6 +86,15 @@ public class FlightDetails{
     public void setAirlineName(String airlineName) {
         this.airlineName = airlineName;
     }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+    
     
     
     

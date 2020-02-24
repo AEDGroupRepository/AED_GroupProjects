@@ -11,6 +11,7 @@ import Business.AirlinerDirectory;
 import Business.Fleet;
 import Business.FleetDirectory;
 import Business.FlightDetailsDirectory;
+import Business.Seats;
 import Business.User;
 import Business.UserDirectory;
 import UserInterface.TravelAgency.ManageAirliner;
@@ -39,6 +40,7 @@ public class TravelAgencyMain extends javax.swing.JFrame {
     private AirlinerDirectory airlinerDirectory;
     private Fleet fleet;
     private FlightDetailsDirectory flightDetailsDirectory;
+    private Seats seats;
     public TravelAgencyMain() {
         initComponents();
         airDirectory= new AirlineDirectory();
@@ -47,6 +49,7 @@ public class TravelAgencyMain extends javax.swing.JFrame {
         fleetDirectory= new FleetDirectory(airDirectory.getAirlineDirectory(),airlinerDirectory.getAirlinerDirectory());
         userDirectory = new UserDirectory();
         flightDetailsDirectory = new FlightDetailsDirectory();
+        seats = new Seats();
         fleet = new Fleet(airDirectory.getAirlineDirectory(), airlinerDirectory.getAirlinerDirectory());
         this.loggedInSession = true;
         logoutBtn.setVisible(false);
@@ -74,7 +77,7 @@ public class TravelAgencyMain extends javax.swing.JFrame {
 
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        upperJPanel.setBackground(new java.awt.Color(102, 201, 116));
+        upperJPanel.setBackground(new java.awt.Color(149, 165, 166));
         upperJPanel.setPreferredSize(new java.awt.Dimension(1328, 34));
 
         btnTravelAgency.setBackground(new java.awt.Color(255, 255, 255));
@@ -146,7 +149,6 @@ public class TravelAgencyMain extends javax.swing.JFrame {
         CardSequenceJPanel.setBackground(new java.awt.Color(255, 255, 255));
         CardSequenceJPanel.setLayout(new java.awt.CardLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/dhankuwarsisodiya/Downloads/airplane.gif")); // NOI18N
         jLabel1.setText("Northeastern Travel Agency ");
         CardSequenceJPanel.add(jLabel1, "card2");
 
@@ -169,7 +171,7 @@ public class TravelAgencyMain extends javax.swing.JFrame {
     private void btnTravelAgencyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTravelAgencyActionPerformed
         // TODO add your handling code here:
         if(this.loggedInSession){
-            ManageAirliner ma = new ManageAirliner(CardSequenceJPanel, custDirectory, airDirectory, fleetDirectory,airlinerDirectory);
+            ManageAirliner ma = new ManageAirliner(CardSequenceJPanel, custDirectory, airDirectory, fleetDirectory,airlinerDirectory,flightDetailsDirectory);
             CardSequenceJPanel.add(ma);
             CardLayout layout = (CardLayout)CardSequenceJPanel.getLayout();
             layout.next(CardSequenceJPanel);
@@ -196,7 +198,7 @@ public class TravelAgencyMain extends javax.swing.JFrame {
                         System.out.println("Login successful");
                         loggedInSession = true;
                         logoutBtn.setVisible(true);
-                        ManageAirliner ma = new ManageAirliner(CardSequenceJPanel, custDirectory, airDirectory, fleetDirectory,airlinerDirectory);
+                        ManageAirliner ma = new ManageAirliner(CardSequenceJPanel, custDirectory, airDirectory, fleetDirectory,airlinerDirectory,flightDetailsDirectory);
                         CardSequenceJPanel.add(ma);
                         CardLayout layout = (CardLayout)CardSequenceJPanel.getLayout();
                         layout.next(CardSequenceJPanel);
@@ -228,7 +230,7 @@ public class TravelAgencyMain extends javax.swing.JFrame {
 
     private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
         // TODO add your handling code here:
-        CustomerSpecification cs= new CustomerSpecification(CardSequenceJPanel,airDirectory,custDirectory);
+        CustomerSpecification cs= new CustomerSpecification(CardSequenceJPanel,airDirectory,custDirectory,flightDetailsDirectory,seats);
         CardSequenceJPanel.add("CustomerSpecification",cs);
          CardLayout layout = (CardLayout)CardSequenceJPanel.getLayout();
         layout.next(CardSequenceJPanel);

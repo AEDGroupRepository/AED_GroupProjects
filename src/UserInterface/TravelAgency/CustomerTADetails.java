@@ -7,6 +7,7 @@ package UserInterface.TravelAgency;
 
 import Business.Customer;
 import Business.CustomerDirectory;
+import Business.FlightDetailsDirectory;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,12 +24,13 @@ public class CustomerTADetails extends javax.swing.JPanel {
      */
     private JPanel CardSequenceJPanel;
     private CustomerDirectory custDict;
-    
+    private FlightDetailsDirectory flightDetailsDirectory;
 
-    CustomerTADetails(JPanel CardSequenceJPanel, CustomerDirectory custDict) {
+    CustomerTADetails(JPanel CardSequenceJPanel, CustomerDirectory custDict, FlightDetailsDirectory flightDetailsDirectory) {
        initComponents(); 
        this.CardSequenceJPanel=CardSequenceJPanel;
         this.custDict=custDict;
+        this.flightDetailsDirectory = flightDetailsDirectory;
         populate11();
     }
       public void populate11(){
@@ -40,10 +42,12 @@ public class CustomerTADetails extends javax.swing.JPanel {
       //  }
         for (Customer c : custDict.getCustomerDirect()){
             Object[] row = new Object[dtm.getColumnCount()];
-            row[0] = c;
-            row[1] = c.getPhoneNumber();
-            row[2] = c.getPassportNumber();
-            //row[3] = c.getCustflight();
+            row[0] = c.getBookingId();
+            row[1] = c.getFlightNumer();
+            row[2] = c.getName();
+            row[3] = c.getPhoneNumber();
+            row[4] = c.getPassportNumber();
+            row[5] = c.getSetSeatNo();
             dtm.addRow(row);
              }
           }
@@ -61,7 +65,7 @@ public class CustomerTADetails extends javax.swing.JPanel {
         tableCustomerDetails = new javax.swing.JTable();
         btnViewDetails = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(242, 225, 229));
+        setBackground(new java.awt.Color(51, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
@@ -73,18 +77,18 @@ public class CustomerTADetails extends javax.swing.JPanel {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 188, 50));
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 30, 170, 50));
 
         tableCustomerDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Customer Name", "Phone No", "Passport No"
+                "Booking Id", "Flight Number", "Customer Name", "Phone No", "Passport No", "Customer Seat"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -92,11 +96,6 @@ public class CustomerTADetails extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tableCustomerDetails);
-        if (tableCustomerDetails.getColumnModel().getColumnCount() > 0) {
-            tableCustomerDetails.getColumnModel().getColumn(0).setResizable(false);
-            tableCustomerDetails.getColumnModel().getColumn(1).setResizable(false);
-            tableCustomerDetails.getColumnModel().getColumn(2).setResizable(false);
-        }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 810, 340));
 
@@ -117,11 +116,12 @@ public class CustomerTADetails extends javax.swing.JPanel {
         int selectRow= tableCustomerDetails.getSelectedRow();
         if(selectRow>=0)
         {
-          Customer c = (Customer) tableCustomerDetails.getValueAt(selectRow,0);
-        ViewCustomerDetails vcd = new ViewCustomerDetails(this.CardSequenceJPanel,c);
-        CardSequenceJPanel.add("viewcustomerdetails",vcd);
-        CardLayout layout = (CardLayout)CardSequenceJPanel.getLayout();
-        layout.next(CardSequenceJPanel);
+          int bookingId = (int) tableCustomerDetails.getValueAt(selectRow,0);
+          String flightNo = (String) tableCustomerDetails.getValueAt(selectRow,4);
+          ViewCustomerDetails vcd = new ViewCustomerDetails(this.CardSequenceJPanel,bookingId, flightNo, custDict, flightDetailsDirectory);
+          CardSequenceJPanel.add("viewcustomerdetails",vcd);
+          CardLayout layout = (CardLayout)CardSequenceJPanel.getLayout();
+          layout.next(CardSequenceJPanel);
         
         }
         else{
