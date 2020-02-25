@@ -64,20 +64,21 @@ public class CustomerTADetails extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableCustomerDetails = new javax.swing.JTable();
         btnViewDetails = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(51, 204, 255));
+        setBackground(new java.awt.Color(220, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
         btnBack.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        btnBack.setText("<<Back");
+        btnBack.setText("<Back");
         btnBack.setBorder(new javax.swing.border.MatteBorder(null));
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 30, 170, 50));
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 90, 40));
 
         tableCustomerDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -97,7 +98,7 @@ public class CustomerTADetails extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tableCustomerDetails);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 810, 340));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 810, 340));
 
         btnViewDetails.setBackground(new java.awt.Color(255, 255, 255));
         btnViewDetails.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
@@ -108,7 +109,11 @@ public class CustomerTADetails extends javax.swing.JPanel {
                 btnViewDetailsActionPerformed(evt);
             }
         });
-        add(btnViewDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 170, 50));
+        add(btnViewDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 150, 40));
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        jLabel1.setText("View Booking Details");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
@@ -117,7 +122,7 @@ public class CustomerTADetails extends javax.swing.JPanel {
         if(selectRow>=0)
         {
           int bookingId = (int) tableCustomerDetails.getValueAt(selectRow,0);
-          String flightNo = (String) tableCustomerDetails.getValueAt(selectRow,4);
+          String flightNo = (String) tableCustomerDetails.getValueAt(selectRow,1);
           ViewCustomerDetails vcd = new ViewCustomerDetails(this.CardSequenceJPanel,bookingId, flightNo, custDict, flightDetailsDirectory);
           CardSequenceJPanel.add("viewcustomerdetails",vcd);
           CardLayout layout = (CardLayout)CardSequenceJPanel.getLayout();
@@ -140,6 +145,7 @@ public class CustomerTADetails extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnViewDetails;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableCustomerDetails;
     // End of variables declaration//GEN-END:variables

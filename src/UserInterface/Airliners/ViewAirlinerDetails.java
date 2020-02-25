@@ -7,9 +7,15 @@ package UserInterface.Airliners;
 
 import Business.Airline;
 import Business.FlightDetails;
+import static UserInterface.Airliners.CreateNewAirliner.parseDate;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.HeadlessException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -48,8 +54,8 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
         txtSource.setText(fd.getDeparture());
         txtDestination.setText(fd.getArrival());
         txtSeats.setText(String.valueOf(airline.getSeats()));
-        txtDepDate.setText(fd.getDepartureDate());
-        txtArrDate.setText(fd.getArrivalDate());
+        txtDepDate.setText(fd.getDepartureDate().toLocalDate()+" "+ fd.getDepartureDate().toLocalTime());
+        txtArrDate.setText(fd.getArrivalDate().toLocalDate()+" "+fd.getArrivalDate().toLocalTime());
         txtPrice.setText(String.valueOf(fd.getPrice()));
 }
     
@@ -81,59 +87,75 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         txtArrDate = new javax.swing.JTextField();
 
-        setBackground(new java.awt.Color(51, 204, 255));
+        setBackground(new java.awt.Color(220, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel1.setText("View Airliner Details");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, 350, 40));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 30, 320, 40));
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
         btnBack.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        btnBack.setText("<<Back");
+        btnBack.setText("<Back");
         btnBack.setBorder(new javax.swing.border.MatteBorder(null));
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 140, 40));
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 100, 40));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel2.setText("Flight Number");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 140, 40));
-        add(txtFlightNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 120, 220, 42));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 150, 30));
+
+        txtFlightNo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        add(txtFlightNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, 300, 30));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel3.setText("Departure");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 190, -1, -1));
-        add(txtSource, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 180, 220, 42));
+        jLabel3.setText("Departure City");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, -1, -1));
+
+        txtSource.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        add(txtSource, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, 300, 30));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel4.setText("Arrival");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 240, -1, -1));
+        jLabel4.setText("Arrival City");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, -1, -1));
 
+        txtSeats.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txtSeats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSeatsActionPerformed(evt);
             }
         });
-        add(txtSeats, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 450, 220, 42));
-        add(txtDestination, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 230, 220, 42));
+        add(txtSeats, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 420, 300, 30));
+
+        txtDestination.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        add(txtDestination, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 220, 300, 30));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel5.setText("Seats");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 460, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel6.setText("Departure Date");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 300, -1, -1));
-        add(txtDepDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 290, 220, 42));
+        jLabel6.setText("Departure Date(yyyy-MM-dd HH:mm:ss)");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
+
+        txtDepDate.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        add(txtDepDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 300, 30));
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel7.setText("Price");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 410, -1, -1));
-        add(txtPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 400, 220, 42));
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 370, -1, -1));
+
+        txtPrice.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPriceActionPerformed(evt);
+            }
+        });
+        add(txtPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 370, 300, 30));
 
         btnUpdate.setBackground(new java.awt.Color(255, 255, 255));
         btnUpdate.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
@@ -143,7 +165,7 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
                 btnUpdateActionPerformed(evt);
             }
         });
-        add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 650, 180, 50));
+        add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 490, 110, 50));
 
         btnSave.setBackground(new java.awt.Color(255, 255, 255));
         btnSave.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
@@ -154,12 +176,14 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
                 btnSaveActionPerformed(evt);
             }
         });
-        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 650, 170, 50));
+        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 490, 100, 50));
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel8.setText("Arrival Date");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 350, -1, -1));
-        add(txtArrDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 340, 220, 42));
+        jLabel8.setText("Arrival Date(yyyy-MM-dd HH:mm:ss)");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, -1, -1));
+
+        txtArrDate.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        add(txtArrDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 320, 300, 30));
     }// </editor-fold>//GEN-END:initComponents
  private void backAction() {
         CardSequenceJPanel.remove(this);
@@ -171,8 +195,7 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
         layout.previous(CardSequenceJPanel);
     }
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
-         //backAction();
+        // TODO add your handling code here:;
         CardSequenceJPanel.remove(this);
         CardLayout layout=(CardLayout)CardSequenceJPanel.getLayout();
         layout.previous(CardSequenceJPanel);
@@ -194,7 +217,15 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
         txtArrDate.setEditable(true);
         txtPrice.setEditable(true);
     }//GEN-LAST:event_btnUpdateActionPerformed
-
+    
+    public static Date parseDate(String date) {
+     try {
+         return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+     } catch (ParseException e) {
+         return null;
+     }
+  }
+    
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
         try{
@@ -210,12 +241,15 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
          if(!datePatternCorrect()) {
          JOptionPane.showMessageDialog(CardSequenceJPanel, "Please enter date in the mm-dd-yyyy format.");
         }else{       
+             DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime depdate = LocalDateTime.parse(d, formatter);
+                LocalDateTime dateArr = LocalDateTime.parse(ad, formatter);
         fd.setFlightNumber(no);
         fd.setDeparture(src);
         fd.setArrival(dest);
         fd.setSeats(s);
-        fd.setDepartureDate(d);
-        fd.setArrivalDate(ad);
+        fd.setDepartureDate(depdate);
+        fd.setArrivalDate(dateArr);
         fd.setPrice(p);
         JOptionPane.showMessageDialog(null, "Airline Details Updated successfully");
 }
@@ -236,10 +270,12 @@ public class ViewAirlinerDetails extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSeatsActionPerformed
 
+    private void txtPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPriceActionPerformed
+
 boolean datePatternCorrect()  {
-        Pattern p= Pattern.compile("^(0?[1-9]|1[012])[-]([0-2][0-9]|3[01])[-]([0-9]{4})$");
-        Matcher m = p.matcher(txtDepDate.getText());
-        return m.matches();
+        return true;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

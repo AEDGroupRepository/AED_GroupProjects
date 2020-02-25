@@ -5,7 +5,12 @@
  */
 package Business;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -22,7 +27,7 @@ public class FlightDetailsDirectory {
         this.flightDetailsDir = flightDetailsDir;
     }
 
-    public FlightDetailsDirectory() {
+    public FlightDetailsDirectory() throws ParseException {
          flightDetailsDir = new ArrayList<FlightDetails>();
          FlightDetails flightdetails= new FlightDetails();
         flightdetails.setAirlineName("Qatar");
@@ -30,8 +35,11 @@ public class FlightDetailsDirectory {
         flightdetails.setFlightNumber("33");
         flightdetails.setDeparture("Boston");
         flightdetails.setArrival("NY");
-        flightdetails.setDepartureDate("02-02-2020");
-        flightdetails.setArrivalDate("02-02-2020");
+        DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime depdate = LocalDateTime.parse("2020-02-02 17:00:00", formatter);
+        LocalDateTime arrDate = LocalDateTime.parse("2020-02-02 18:00:00", formatter);
+        flightdetails.setDepartureDate(depdate);
+        flightdetails.setArrivalDate(arrDate);
         flightdetails.setPrice(500);
         flightdetails.setSeats(20);
         flightDetailsDir.add(flightdetails);

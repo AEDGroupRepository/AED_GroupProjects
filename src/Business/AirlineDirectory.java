@@ -65,7 +65,7 @@ public class AirlineDirectory {
     }
     public Airline getAirlineName(String airlinename, String airliner){
         for(Airline a: airlineDirectory){
-            if(a.getAirlineName() == airlinename && a.getAirlinerName() == airliner){
+            if(a.getAirlineName().equalsIgnoreCase(airlinename) && a.getAirlinerName().equalsIgnoreCase(airliner)){
                 return a;
             }
         }

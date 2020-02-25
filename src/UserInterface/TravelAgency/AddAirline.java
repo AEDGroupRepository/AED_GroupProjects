@@ -30,7 +30,7 @@ public class AddAirline extends javax.swing.JPanel {
         initComponents();
         this.CardSequenceJPanel =CardSequenceJPanel;
         this.airDirect = airdirect;
-        this.airlinerDirectory = airlinerDirectory;
+        this.airlinerDirectory = AarlinerDirectory;
     }
 
     /**
@@ -47,7 +47,7 @@ public class AddAirline extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(51, 204, 255));
+        setBackground(new java.awt.Color(220, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAddAirliner.setBackground(new java.awt.Color(255, 255, 255));
@@ -59,23 +59,25 @@ public class AddAirline extends javax.swing.JPanel {
                 btnAddAirlinerActionPerformed(evt);
             }
         });
-        add(btnAddAirliner, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 240, 180, 60));
-        add(txtAddAirliner, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, 320, 40));
+        add(btnAddAirliner, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 100, 50));
+
+        txtAddAirliner.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        add(txtAddAirliner, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 300, 40));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Airline Name");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 150, 50));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 150, 30));
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
         btnBack.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        btnBack.setText("<<BACK");
+        btnBack.setText("<Back");
         btnBack.setBorder(new javax.swing.border.MatteBorder(null));
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 170, 50));
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 90, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -92,21 +94,35 @@ public class AddAirline extends javax.swing.JPanel {
 
     private void btnAddAirlinerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAirlinerActionPerformed
         // TODO add your handling code here:
+        
         if(txtAddAirliner.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Please Enter Airliner Name");
         }
         else{
-            Airliner airliner = new Airliner(txtAddAirliner.getText());
-            AirlinerDirectory.addAirliner(airliner);
+
+            if(!checkAirlinerName(txtAddAirliner.getText())){
+            JOptionPane.showMessageDialog(null, "Airliner name already exists");
+        } else{
+                Airliner airliner = new Airliner(txtAddAirliner.getText());
+                AirlinerDirectory.addAirliner(airliner);
        
-         JOptionPane.showMessageDialog(null, "Airliner successfully added");
-         txtAddAirliner.setText("");
+                JOptionPane.showMessageDialog(null, "Airliner successfully added");
+                txtAddAirliner.setText("");
+            }
         }
            
         
     }//GEN-LAST:event_btnAddAirlinerActionPerformed
-
-
+    public boolean checkAirlinerName(String name)
+    {
+        System.out.println("here4");
+        for(Airliner a : airlinerDirectory.getAirlinerDirectory()){
+            if(a.getAirlineName().compareTo(name) == 0){
+                return false;
+            }
+        }
+        return true;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAirliner;
     private javax.swing.JButton btnBack;

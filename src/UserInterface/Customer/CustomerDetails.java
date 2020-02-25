@@ -54,7 +54,7 @@ public class CustomerDetails extends javax.swing.JPanel {
         txtCustomer = new javax.swing.JTextField();
         btnConfirm = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(51, 204, 255));
+        setBackground(new java.awt.Color(220, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
@@ -63,7 +63,7 @@ public class CustomerDetails extends javax.swing.JPanel {
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
         btnBack.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        btnBack.setText("<<Back");
+        btnBack.setText("<Back");
         btnBack.setBorder(new javax.swing.border.MatteBorder(null));
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,7 +88,7 @@ public class CustomerDetails extends javax.swing.JPanel {
         add(txtPassport, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 230, 42));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel5.setText("Customer Fight");
+        jLabel5.setText("Customer Flight");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 410, -1, -1));
 
         txtCustomer.addActionListener(new java.awt.event.ActionListener() {

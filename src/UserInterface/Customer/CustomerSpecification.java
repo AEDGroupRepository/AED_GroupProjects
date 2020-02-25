@@ -12,6 +12,7 @@ import Business.FlightDetails;
 import Business.FlightDetailsDirectory;
 import Business.Seats;
 import java.awt.CardLayout;
+import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -64,21 +65,21 @@ public class CustomerSpecification extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         DayNightComboBox = new javax.swing.JComboBox<>();
 
-        setBackground(new java.awt.Color(228, 241, 254));
+        setBackground(new java.awt.Color(220, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel1.setText("Customer Travel Requirement");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 460, 80));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel2.setText("Departure");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 240, -1, 30));
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel2.setText("Departure City");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, -1, 30));
         add(departureTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 230, 290, 40));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel3.setText("Arrival");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, -1, -1));
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel3.setText("Arrival City");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 290, -1, -1));
 
         arrivalTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,9 +97,9 @@ public class CustomerSpecification extends javax.swing.JPanel {
                 searchBtnActionPerformed(evt);
             }
         });
-        add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 560, 210, 50));
+        add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 530, 170, 50));
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel4.setText("Date");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 340, -1, -1));
 
@@ -109,16 +110,16 @@ public class CustomerSpecification extends javax.swing.JPanel {
         });
         add(departureDateTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 330, 290, 40));
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel5.setText("Price");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 390, -1, -1));
         add(priceTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, 290, 40));
 
-        jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel6.setText("Preferred Time ");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 430, -1, -1));
 
-        DayNightComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--", "Morning", "Afternoon", "Night" }));
+        DayNightComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select--", "Morning", "Day Time", "Night" }));
         DayNightComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DayNightComboBoxActionPerformed(evt);
@@ -155,7 +156,7 @@ public class CustomerSpecification extends javax.swing.JPanel {
         // only departuredate
         else if(destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
             for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
-            if(f.getDepartureDate().equalsIgnoreCase(date)){
+            if(f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date)){
                 customerSearch.add(f);
             }
         }
@@ -175,7 +176,8 @@ public class CustomerSpecification extends javax.swing.JPanel {
         // only daytime
         else if(destination.isEmpty() && arrival.isEmpty() && date.isEmpty() && price.isEmpty() && dayTime != "--Select--"){
             for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
-            if(f.getPrice()== Integer.parseInt(price)){
+                System.out.println(f.getDayTime()+" "+dayTime);
+            if(f.getDayTime()== dayTime){
                 customerSearch.add(f);
             }
         }
@@ -195,7 +197,7 @@ public class CustomerSpecification extends javax.swing.JPanel {
         //destination place and departure date
         else if(!destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
             for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
-            if(f.getDeparture().equalsIgnoreCase(destination) && f.getDepartureDate().equalsIgnoreCase(date)){
+            if(f.getDeparture().equalsIgnoreCase(destination) && f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date)){
                 customerSearch.add(f);
             }
         }
@@ -212,6 +214,19 @@ public class CustomerSpecification extends javax.swing.JPanel {
             
         changePanel(customerSearch);
         }
+        
+        //destination place and daytime
+        else if(!destination.isEmpty() && arrival.isEmpty() && date.isEmpty() && price.isEmpty() && dayTime != "--Select--"){
+            System.out.println("edg");
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDeparture().equalsIgnoreCase(destination) && f.getDayTime()== dayTime){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        
         //arrival place and price
         else if(destination.isEmpty() && !arrival.isEmpty() && date.isEmpty() && !price.isEmpty() && dayTime == "--Select--"){
             for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
@@ -225,17 +240,29 @@ public class CustomerSpecification extends javax.swing.JPanel {
         //arrival place and departure date
         else if(destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && !price.isEmpty() && dayTime == "--Select--"){
             for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
-            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDepartureDate().equalsIgnoreCase(date)){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        } 
+        
+        //arrival place and daytime
+        else if(destination.isEmpty() && arrival.isEmpty() && date.isEmpty() && !price.isEmpty() && dayTime != "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDayTime()== dayTime){
                 customerSearch.add(f);
             }
         }
             
         changePanel(customerSearch);
         }
+                
         //arrival place and departure date and departure place
         else if(!destination.isEmpty() && !arrival.isEmpty() && !date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
             for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
-            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDepartureDate().equalsIgnoreCase(date) && f.getDeparture().equalsIgnoreCase(destination)){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date) && f.getDeparture().equalsIgnoreCase(destination)){
                 customerSearch.add(f);
             }
         }
@@ -255,17 +282,114 @@ public class CustomerSpecification extends javax.swing.JPanel {
         //arrival place and price and departure date
         else if(destination.isEmpty() && !arrival.isEmpty() && !date.isEmpty() && !price.isEmpty() && dayTime == "--Select--"){
             for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
-            if(f.getArrival().equalsIgnoreCase(arrival) && f.getPrice()== Integer.parseInt(price) && f.getDepartureDate().equalsIgnoreCase(date)){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getPrice()== Integer.parseInt(price) && f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date)){
                 customerSearch.add(f);
             }
         }
             
         changePanel(customerSearch);
         }
-        //arrival place and price and departure date
-        else if(destination.isEmpty() && !arrival.isEmpty() && !date.isEmpty() && price.isEmpty() && dayTime == "--Select--"){
+        //arrival place and price and daytime
+        else if(destination.isEmpty() && !arrival.isEmpty() && date.isEmpty() && !price.isEmpty() && dayTime != "--Select--"){
             for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
-            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDepartureDate().equalsIgnoreCase(date)){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getPrice()== Integer.parseInt(price) && f.getDayTime()== dayTime){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        
+        //arrival place and date and daytime
+        else if(destination.isEmpty() && !arrival.isEmpty() && !date.isEmpty() && price.isEmpty() && dayTime != "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date) && f.getDayTime()== dayTime){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        
+        //deaprture place and arrival and daytime
+        else if(!destination.isEmpty() && !arrival.isEmpty() && date.isEmpty() && price.isEmpty() && dayTime != "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getArrival().equalsIgnoreCase(arrival) && f.getDeparture().equalsIgnoreCase(destination) && f.getDayTime()== dayTime){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        
+        //date and price and daytime
+        else if(destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && !price.isEmpty() && dayTime != "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date) && f.getPrice()== Integer.parseInt(price) && f.getDayTime()== dayTime){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        
+        //date and price and departure
+        else if(!destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && !price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date) && f.getPrice()== Integer.parseInt(price) && f.getDeparture().equalsIgnoreCase(destination)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        
+        //date and price and daytime
+        else if(destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && !price.isEmpty() && dayTime != "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date) && f.getPrice()== Integer.parseInt(price) && f.getDayTime()== dayTime){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //date and daytime
+        else if(destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && price.isEmpty() && dayTime != "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date)&& f.getDayTime()== dayTime){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        //date and price
+        else if(destination.isEmpty() && arrival.isEmpty() && !date.isEmpty() && !price.isEmpty() && dayTime == "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date) && f.getPrice()== Integer.parseInt(price)){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        
+        // price and daytime
+        else if(destination.isEmpty() && arrival.isEmpty() && date.isEmpty() && !price.isEmpty() && dayTime != "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getPrice()== Integer.parseInt(price) && f.getDayTime()== dayTime){
+                customerSearch.add(f);
+            }
+        }
+            
+        changePanel(customerSearch);
+        }
+        
+        // price and daytime
+        else if(!destination.isEmpty() && !arrival.isEmpty() && !date.isEmpty() && !price.isEmpty() && dayTime != "--Select--"){
+            for(FlightDetails f: flightDetailsDirectory.getFlightDetailsDir()){
+            if(f.getDeparture().equalsIgnoreCase(destination) && f.getArrival().equalsIgnoreCase(arrival) && f.getDepartureDate().toLocalDate().toString().equalsIgnoreCase(date) && f.getPrice()== Integer.parseInt(price) && f.getDayTime()== dayTime){
                 customerSearch.add(f);
             }
         }

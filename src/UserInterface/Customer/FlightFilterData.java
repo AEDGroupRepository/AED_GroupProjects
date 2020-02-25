@@ -64,17 +64,16 @@ ArrayList<FlightDetails> customerSearch;
         int rowCount = tableFlightClassification.getRowCount();
         DefaultTableModel dtm = (DefaultTableModel)tableFlightClassification.getModel();
         dtm.setRowCount(0);
-        System.out.println("eu");
-        System.out.println(customerSearch);
         //Collections.sort(customerSearch);
         for(FlightDetails fdd : customerSearch){
         Object[] row = new Object[dtm.getColumnCount()];
         row[0]=fdd.getFlightNumber();
-        row[1]=fdd.getDeparture();
-        row[2]=fdd.getArrival();
-        row[3]=fdd.getDepartureDate();
-        row[4]=fdd.getPrice();
-        row[5]=fdd.getSeats();
+        row[1] = fdd.getAirlineName();
+        row[2]=fdd.getDeparture();
+        row[3]=fdd.getArrival();
+        row[4]=fdd.getDepartureDate().toLocalDate()+" "+ fdd.getDepartureDate().toLocalTime();
+        row[5]=fdd.getPrice();
+        row[6]=fdd.getSeats();
         dtm.addRow(row);
         }
     }
@@ -99,11 +98,12 @@ ArrayList<FlightDetails> customerSearch;
         jLabel3 = new javax.swing.JLabel();
         txtPassportNumber = new javax.swing.JTextField();
         btnConfirmBooking = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        seatsComboBox = new javax.swing.JComboBox<>();
+        seatsComboBox = new javax.swing.JComboBox<String>();
+        jLabel6 = new javax.swing.JLabel();
+        emailTextField = new javax.swing.JTextField();
 
-        setBackground(new java.awt.Color(51, 204, 255));
+        setBackground(new java.awt.Color(220, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
@@ -122,11 +122,11 @@ ArrayList<FlightDetails> customerSearch;
 
             },
             new String [] {
-                "Flight Number", "Departure", "Arrival", "Date", "Price", "Seats"
+                "Flight Number", "Airliner", "Departure", "Arrival", "Date", "Price", "Seats"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -134,21 +134,19 @@ ArrayList<FlightDetails> customerSearch;
             }
         });
         jScrollPane1.setViewportView(tableFlightClassification);
-        if (tableFlightClassification.getColumnModel().getColumnCount() > 0) {
-            tableFlightClassification.getColumnModel().getColumn(0).setResizable(false);
-            tableFlightClassification.getColumnModel().getColumn(1).setResizable(false);
-            tableFlightClassification.getColumnModel().getColumn(2).setResizable(false);
-            tableFlightClassification.getColumnModel().getColumn(3).setResizable(false);
-            tableFlightClassification.getColumnModel().getColumn(4).setResizable(false);
-            tableFlightClassification.getColumnModel().getColumn(5).setResizable(false);
-        }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 820, 280));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Name:");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, -1, -1));
-        add(txtCustomerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, 220, 42));
+
+        txtCustomerName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCustomerNameActionPerformed(evt);
+            }
+        });
+        add(txtCustomerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 430, 220, 42));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel2.setText("Phone:");
@@ -175,15 +173,13 @@ ArrayList<FlightDetails> customerSearch;
                 btnConfirmBookingActionPerformed(evt);
             }
         });
-        add(btnConfirmBooking, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 640, 210, 40));
+        add(btnConfirmBooking, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 650, 210, 40));
 
-        jLabel4.setText("Best Flight");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 100, 90, 50));
-
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel5.setText("Seat:");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 600, -1, -1));
 
-        seatsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--" }));
+        seatsComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select--" }));
         seatsComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 seatsComboBoxMouseClicked(evt);
@@ -195,6 +191,17 @@ ArrayList<FlightDetails> customerSearch;
             }
         });
         add(seatsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 600, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel6.setText("Email:");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 380, -1, -1));
+
+        emailTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailTextFieldActionPerformed(evt);
+            }
+        });
+        add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, 220, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -209,8 +216,8 @@ ArrayList<FlightDetails> customerSearch;
         // TODO add your handling code here:
         int selectedrow = tableFlightClassification.getSelectedRow();
         String name = txtCustomerName.getText().trim();
-
-        if (txtCustomerName.getText().isEmpty() || txtPhoneNumber.getText().isEmpty() || txtPassportNumber.getText().isEmpty()) {
+        String seatNo = (String) seatsComboBox.getSelectedItem();
+        if (seatNo == "--Select--" || emailTextField.getText().isEmpty() || txtCustomerName.getText().isEmpty() || txtPhoneNumber.getText().isEmpty() || txtPassportNumber.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please Enter all the fields");
         } else {
 
@@ -220,10 +227,15 @@ ArrayList<FlightDetails> customerSearch;
 
                 String passport = txtPassportNumber.getText().trim();
 
-                String seatNo = (String) seatsComboBox.getSelectedItem();
+                
+                
+                String email = emailTextField.getText().trim();
                 if (!phonePatternCorrect()) {
                     JOptionPane.showMessageDialog(CardSequenceJPanel, "Enter valid phone number");
-                } else {
+                } else if(!emailCorrect()){
+                    JOptionPane.showMessageDialog(CardSequenceJPanel, "Enter valid email address");
+                }
+                else {
                     Random rand = new Random();
                     Customer c = custDict.addCustomer();
                     c.setName(name);
@@ -234,6 +246,7 @@ ArrayList<FlightDetails> customerSearch;
                     String flightNo=(String) tableFlightClassification.getValueAt(selectedrow, 0);
                     c.setFlightNumer(flightNo);
                     c.setBookingId(rand.nextInt(1000000));
+                    c.setEmail(email);
 //                    int value = 0;
 //                    //value=fd.getSeats();
 //                    if (value > 0) {
@@ -255,6 +268,8 @@ ArrayList<FlightDetails> customerSearch;
                     txtCustomerName.setText("");
                     txtPhoneNumber.setText("");
                     txtPassportNumber.setText("");
+                    emailTextField.setText("");
+                    seatsComboBox.removeAllItems();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Cannot Book. Select flight first.");
@@ -287,8 +302,7 @@ ArrayList<FlightDetails> customerSearch;
         int selectedrow=tableFlightClassification.getSelectedRow();
         if(selectedrow>=0){
             seatsComboBox.removeAllItems();
-            int seatCount=(int) tableFlightClassification.getValueAt(selectedrow, 5);
-            System.out.println(seatCount);
+            int seatCount=(int) tableFlightClassification.getValueAt(selectedrow, 6);
             seats.setTotalSeats(seatCount);
             ArrayList<Integer> availableSeats = seats.getAvailableSeats();
             for(int i =0; i<availableSeats.size(); i++){
@@ -297,20 +311,38 @@ ArrayList<FlightDetails> customerSearch;
         }
     }//GEN-LAST:event_seatsComboBoxMouseClicked
 
+    private void txtCustomerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCustomerNameActionPerformed
+
+    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailTextFieldActionPerformed
+
   boolean phonePatternCorrect()  {
         Pattern p= Pattern.compile("^[0-9]{10}+$");
         Matcher m = p.matcher(txtPhoneNumber.getText());
         return m.matches();
     }
+  boolean emailCorrect(){
+      String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
+                            "[a-zA-Z0-9_+&*-]+)*@" + 
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
+                            "A-Z]{2,7}$"; 
+                              
+        Pattern pat = Pattern.compile(emailRegex); 
+        return pat.matcher(emailTextField.getText()).matches(); 
+  }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnConfirmBooking;
+    private javax.swing.JTextField emailTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> seatsComboBox;
     private javax.swing.JTable tableFlightClassification;

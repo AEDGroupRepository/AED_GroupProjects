@@ -5,6 +5,9 @@
  */
 package Business;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  *
  * @author Girija Dhawale
@@ -16,17 +19,17 @@ public class FlightDetails{
     private String flightNumber;
     private String departure;
     private String arrival;
-    private String departureDate;
-    private String arrivalDate;
+    private LocalDateTime departureDate;
+    private LocalDateTime arrivalDate;
     private String dayTime;
     private double price;
     private int seats;
 
-    public String getArrivalDate() {
+    public LocalDateTime getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalDate(String arrivalDate) {
+    public void setArrivalDate(LocalDateTime arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
     
@@ -55,16 +58,26 @@ public class FlightDetails{
         this.arrival = arrival;
     }
 
-    public String getDepartureDate() {
+    public LocalDateTime getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(String departureDate) {
+    public void setDepartureDate(LocalDateTime departureDate) {
         this.departureDate = departureDate;
     }
 
     public String getDayTime() {
-        return dayTime;
+        int hour = departureDate.getHour();
+        System.out.println(hour);
+        if(hour >= 4 && hour <= 12){
+            this.dayTime="Morning";
+        } else if(hour > 12 && hour <= 18){
+            this.dayTime = "Day Time";
+        } else if((hour > 18 && hour < 25) || (hour >= 1 && hour < 4) ){
+            this.dayTime = "Night";
+        }
+        System.out.println(this.dayTime);
+        return this.dayTime;
     }
 
     public void setDayTime(String dayTime) {

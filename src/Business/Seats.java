@@ -19,17 +19,15 @@ public class Seats {
     public Seats(){
         seatsTaken = new ArrayList<Integer>();
         totalSeats = new ArrayList<Integer>();
-        availableSeats = new ArrayList<Integer>();
+        
     }
 
     public ArrayList<Integer> getAvailableSeats() {
+        availableSeats = new ArrayList<Integer>();
         for(int i = 1; i<= totalSeats.size(); i++){
-            //for(int j = 1; j<= seatsTaken.size(); j++){
                 if(!seatsTaken.contains(i)){
-                    System.out.println("Avaiable seats "+i);
                     availableSeats.add(i);
                 }
-            //}
     }
         return availableSeats;
     }
@@ -44,10 +42,11 @@ public class Seats {
     
     //Setting all seats on the flight
     public void setTotalSeats(int seatCount) {
-        for(int i = 1; i<=seatCount ; i++)
-        {
-            System.out.println("Setting seat in total seats "+ i);
-            totalSeats.add(i);
+        if(totalSeats.isEmpty()){
+           for(int i = 1; i<=seatCount ; i++)
+            {
+                totalSeats.add(i);
+            } 
         }
     }
     

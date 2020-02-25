@@ -59,12 +59,12 @@ public class LoginAirliner extends javax.swing.JPanel {
         btnGo = new javax.swing.JButton();
         airlinecombobox = new javax.swing.JComboBox();
 
-        setBackground(new java.awt.Color(51, 204, 255));
+        setBackground(new java.awt.Color(220, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Airline Name");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, -1, -1));
 
         btnGo.setBackground(new java.awt.Color(255, 255, 255));
         btnGo.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
@@ -75,9 +75,9 @@ public class LoginAirliner extends javax.swing.JPanel {
                 btnGoActionPerformed(evt);
             }
         });
-        add(btnGo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 370, 191, 71));
+        add(btnGo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 80, 40));
 
-        airlinecombobox.setFont(new java.awt.Font("SansSerif", 0, 32)); // NOI18N
+        airlinecombobox.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         airlinecombobox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select--" }));
         airlinecombobox.setBorder(new javax.swing.border.MatteBorder(null));
         airlinecombobox.addActionListener(new java.awt.event.ActionListener() {
@@ -85,7 +85,7 @@ public class LoginAirliner extends javax.swing.JPanel {
                 airlinecomboboxActionPerformed(evt);
             }
         });
-        add(airlinecombobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, 379, 71));
+        add(airlinecombobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 200, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed

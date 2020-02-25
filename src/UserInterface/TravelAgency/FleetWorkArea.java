@@ -80,7 +80,7 @@ public class FleetWorkArea extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(51, 204, 255));
+        setBackground(new java.awt.Color(220, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tableFleet.setModel(new javax.swing.table.DefaultTableModel(
@@ -109,15 +109,15 @@ public class FleetWorkArea extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 910, 300));
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
-        btnBack.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
-        btnBack.setText("<<BACK");
+        btnBack.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnBack.setText("<BACK");
         btnBack.setBorder(new javax.swing.border.MatteBorder(null));
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 170, 50));
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 100, 40));
 
         btnAdd.setBackground(new java.awt.Color(255, 255, 255));
         btnAdd.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
@@ -128,7 +128,7 @@ public class FleetWorkArea extends javax.swing.JPanel {
                 btnAddActionPerformed(evt);
             }
         });
-        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 170, 40));
+        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 185, 90, 40));
 
         btnDelete.setBackground(new java.awt.Color(255, 255, 255));
         btnDelete.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
@@ -139,7 +139,7 @@ public class FleetWorkArea extends javax.swing.JPanel {
                 btnDeleteActionPerformed(evt);
             }
         });
-        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 170, 40));
+        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 90, 40));
 
         btnView.setBackground(new java.awt.Color(255, 255, 255));
         btnView.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
@@ -150,7 +150,7 @@ public class FleetWorkArea extends javax.swing.JPanel {
                 btnViewActionPerformed(evt);
             }
         });
-        add(btnView, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 170, 40));
+        add(btnView, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 315, 90, 40));
 
         txtAirliner.setEnabled(false);
         txtAirliner.addActionListener(new java.awt.event.ActionListener() {
@@ -158,15 +158,15 @@ public class FleetWorkArea extends javax.swing.JPanel {
                 txtAirlinerActionPerformed(evt);
             }
         });
-        add(txtAirliner, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, 240, 40));
+        add(txtAirliner, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, 240, 30));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Airline");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, -1, 30));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel2.setText("Fleet Work Area");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
